@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Highview P&C — Strategy & Phased Delivery Plan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f8fa; color: #1a1a2e; min-height: 100vh; }
+  .wrap { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+  .page-hdr { background: #1B3A5C; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+  .page-hdr h1 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+  .page-hdr p { font-size: 12.5px; color: #a8c4d8; margin-top: 4px; }
+
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid #e4e8ee; margin-bottom: 24px; }
+  .tab { padding: 10px 22px; font-size: 13px; font-weight: 600; color: #666; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; font-family: inherit; }
+  .tab.active { color: #1B3A5C; border-bottom-color: #1B3A5C; }
+  .tab:hover:not(.active) { color: #333; background: #f0f4f8; border-radius: 6px 6px 0 0; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Sort panel */
+  .intro-box { font-size: 13px; color: #444; line-height: 1.7; margin-bottom: 24px; padding: 14px 18px; background: #fff; border-radius: 10px; border-left: 4px solid #2E7D8C; box-shadow: 0 1px 8px rgba(27,58,92,0.07); }
+  .intro-box strong { color: #1B3A5C; }
+  .section-hdr { display: flex; align-items: center; gap: 12px; margin: 24px 0 14px; }
+  .section-hdr h2 { font-size: 15px; font-weight: 700; color: #1B3A5C; }
+  .count-badge { font-size: 12px; padding: 3px 10px; border-radius: 99px; font-weight: 600; }
+  .strat-badge { background: #dce6f0; color: #1B3A5C; }
+  .ops-badge   { background: #e0f0e6; color: #2C6E49; }
+  .item-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media(max-width:700px){ .item-grid { grid-template-columns: 1fr; } }
+  .item-card { padding: 12px 14px; border-radius: 10px; border: 0.5px solid #dde2e8; background: #fff; box-shadow: 0 1px 6px rgba(27,58,92,0.05); }
+  .item-card.strat { border-left: 4px solid #1B3A5C; }
+  .item-card.ops   { border-left: 4px solid #4A7C59; }
+  .item-top { display: flex; align-items: flex-start; gap: 9px; }
+  .item-num { font-size: 11px; font-weight: 700; color: #fff; padding: 2px 7px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+  .item-name { font-size: 13px; font-weight: 600; color: #1a1a2e; line-height: 1.35; }
+  .item-pillar { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 99px; color: #fff; margin-top: 5px; font-weight: 600; }
+  .item-why { font-size: 11.5px; color: #555; margin-top: 6px; line-height: 1.5; }
+
+  /* Roadmap panel */
+  .rm-intro { font-size: 13px; color: #444; line-height: 1.7; margin-bottom: 16px; padding: 14px 18px; background: #fff; border-radius: 10px; border-left: 4px solid #2E7D8C; box-shadow: 0 1px 8px rgba(27,58,92,0.07); }
+  .summary-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .summary-label { font-size: 12px; font-weight: 600; color: #1B3A5C; margin-right: 4px; }
+  .s-chip { font-size: 11.5px; padding: 4px 12px; border-radius: 99px; font-weight: 600; }
+  .q1-chip { background: #e0f5e9; color: #1a6e2e; }
+  .q2-chip { background: #dce6f0; color: #1B3A5C; }
+  .q3-chip { background: #f5efe0; color: #7F6000; }
+  .q4-chip { background: #ede5f4; color: #6B4C8A; }
+  .un-chip  { background: #f0f0f0; color: #888; }
+  .rm-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .rf-btn { padding: 5px 12px; border: 1px solid #dde2e8; border-radius: 6px; background: #fff; color: #666; font-size: 12px; cursor: pointer; font-family: inherit; font-weight: 500; transition: all 0.12s; }
+  .rf-btn.active { background: #1B3A5C; color: #fff; border-color: #1B3A5C; }
+  .rm-table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 8px rgba(27,58,92,0.07); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead tr { background: #1B3A5C; }
+  th { padding: 10px 14px; font-size: 11px; font-weight: 700; color: #fff; text-align: left; letter-spacing: 0.3px; }
+  th.c { text-align: center; }
+  td { padding: 10px 14px; border-bottom: 0.5px solid #eef0f3; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f7f9fc; }
+  .rm-num { font-size: 12px; font-weight: 700; text-align: center; }
+  .rm-name { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+  .rm-pillar-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 99px; color: #fff; font-weight: 600; white-space: nowrap; }
+  .rm-why { font-size: 11px; color: #555; line-height: 1.5; max-width: 260px; }
+  .phase-sel { width: 100%; border: 1px solid #d0d5dd; border-radius: 6px; padding: 5px 8px; font-size: 11.5px; font-family: inherit; background: #fff; color: #1a1a2e; cursor: pointer; }
+  .phase-sel:focus { outline: 2px solid #1B3A5C; }
+  .phase-indicator { margin-top: 5px; text-align: center; }
+  .pi-chip { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+  .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .export-btn { padding: 9px 18px; border: 1px solid #dde2e8; border-radius: 8px; background: #fff; color: #1B3A5C; font-size: 12.5px; cursor: pointer; font-family: inherit; font-weight: 600; transition: all 0.12s; }
+  .export-btn:hover { background: #f0f4f8; }
+  .export-btn.primary { background: #1B3A5C; color: #fff; border-color: #1B3A5C; }
+  .export-btn.primary:hover { background: #2a4f7a; }
+  .footer { margin-top: 32px; padding: 14px 0; text-align: center; font-size: 11px; color: #aaa; border-top: 1px solid #eee; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-hdr">
+    <h1>Highview People &amp; Culture — Strategy &amp; Phased Delivery Plan</h1>
+    <p>22 strategic initiatives · 10 operational items · Fully editable phase assignments · Last reviewed: <span id="today"></span></p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-sort" onclick="showTab('sort')">Strategy vs Operational</button>
+    <button class="tab" id="tab-rm" onclick="showTab('rm')">Phased Delivery Plan</button>
+  </div>
+
+  <!-- SORT PANEL -->
+  <div id="panel-sort" class="panel active">
+    <div class="intro-box">
+      <strong>22 strategic initiatives</strong> belong in the P&amp;C Strategy presented to the Board — they represent meaningful, deliberate investment in how Highview attracts, develops and retains its people.<br><br>
+      <strong>10 operational items</strong> should move to the annual HR work plan. They are real and valuable but are routine practice improvements rather than strategic initiatives. Presenting them at Board level dilutes the impact of the stronger items. Several are also components of the strategic initiatives — for example, once the culture dashboard is built, turnover tracking becomes a tab within it rather than a standalone piece.
+    </div>
+
+    <div class="section-hdr">
+      <h2>P&amp;C Strategy — Board-level initiatives</h2>
+      <span class="count-badge strat-badge">22 initiatives</span>
+    </div>
+    <div class="item-grid" id="strat-grid"></div>
+
+    <div class="section-hdr">
+      <h2>Annual HR work plan — operational improvements</h2>
+      <span class="count-badge ops-badge">10 items</span>
+    </div>
+    <div class="item-grid" id="ops-grid"></div>
+  </div>
+
+  <!-- ROADMAP PANEL -->
+  <div id="panel-rm" class="panel">
+    <div class="rm-intro">
+      Each initiative is pre-assigned to a delivery phase based on sequencing logic — quick wins and compliance-risk items first, complex cultural programs later. <strong>Every phase dropdown is editable</strong> — change any assignment to reflect your conversation with your manager. The summary bar updates as you make changes. Use "Copy plan" to get a clean text version for your meeting.
+    </div>
+
+    <div class="summary-bar">
+      <span class="summary-label">Current plan:</span>
+      <span class="s-chip q1-chip" id="s-q1">— in Q1</span>
+      <span class="s-chip q2-chip" id="s-q2">— in Q2</span>
+      <span class="s-chip q3-chip" id="s-q3">— in Q3</span>
+      <span class="s-chip q4-chip" id="s-q4">— in Q4</span>
+      <span class="s-chip un-chip"  id="s-un">— unassigned</span>
+    </div>
+
+    <div class="rm-filters">
+      <button class="rf-btn active" onclick="setFilter('all',this)">All initiatives</button>
+      <button class="rf-btn" onclick="setFilter('Q1',this)">Q1 — Do Now</button>
+      <button class="rf-btn" onclick="setFilter('Q2',this)">Q2 — Build &amp; Embed</button>
+      <button class="rf-btn" onclick="setFilter('Q3',this)">Q3 — Grow &amp; Scale</button>
+      <button class="rf-btn" onclick="setFilter('Q4',this)">Q4 — Sustain &amp; Elevate</button>
+      <button class="rf-btn" onclick="setFilter('',this)">Unassigned</button>
+    </div>
+
+    <div class="rm-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="c">#</th>
+            <th>Initiative</th>
+            <th>Pillar</th>
+            <th>Board rationale</th>
+            <th style="min-width:180px">Phase</th>
+          </tr>
+        </thead>
+        <tbody id="rm-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="export-row">
+      <button class="export-btn primary" onclick="copyPlan()">Copy plan to clipboard</button>
+      <button class="export-btn" onclick="printPlan()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <div class="footer">Highview People &amp; Culture Strategy &nbsp;|&nbsp; Confidential Working Document &nbsp;|&nbsp; © Highview</div>
+</div>
+
+<script>
+document.getElementById('today').textContent = new Date().toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'});
+
+const PC = {P1:"#2E7D8C",P2:"#1B3A5C",P3:"#4A7C59",P4:"#8B5E3C",P5:"#6B4C8A",P6:"#C0392B",P7:"#2C6E49",P8:"#7F6000"};
+const PL = {P1:"Talent & Recruitment",P2:"Onboarding",P3:"Learning & Development",P4:"Engagement & Retention",P5:"Performance & Remuneration",P6:"Leadership & Culture",P7:"Departures & Knowledge",P8:"Governance & Compliance"};
+
+const STRAT = [
+  [2, "Buddy / Mentor program for new starters", "P2", "Visible, tangible early win that demonstrates the strategy is real. Low cost, high staff sentiment impact. Boards respond well to initiatives that show immediate care for people.", "Q1"],
+  [5, "Structured interview process and templates", "P1", "Directly addresses hiring quality risk. Inconsistent hiring is a Board-level concern in professional services — one poor hire in a client-facing role has revenue and reputational consequences.", "Q1"],
+  [15, "Employee Net Promoter Score (eNPS) tracking", "P4", "Creates a measurable culture KPI the Board can track over time. Boards want data on culture health — this gives them a number without requiring significant investment.", "Q1"],
+  [16, "Employee Wellbeing Program / EAP", "P4", "Duty of care and risk management. Boards in professional services are acutely aware of mental health obligations. Low cost, high visibility, defensible at any level.", "Q1"],
+  [9, "Defined career pathways and progression frameworks", "P3", "Directly addresses retention of fee-earning staff — Highview's primary revenue asset. A Board will see undefined career pathways as a flight risk in a tight labour market.", "Q1"],
+  [27, "Knowledge transfer plans", "P7", "Key person dependency is a Board-level risk in accounting and financial services. Client relationships walking out the door is a direct revenue threat — this is risk management.", "Q1"],
+  [32, "Stay interviews", "P7", "Low effort, high intelligence value. Boards appreciate proactive retention over reactive replacement. Demonstrates that leadership is listening before people decide to leave.", "Q1"],
+  [4, "Formalised EVP", "P1", "Underpins every hiring conversation and brand interaction. Without a defined EVP, Highview competes on salary alone — a Board in a growth firm wants a compelling employer narrative.", "Q2"],
+  [14, "Regular employee engagement / pulse surveys", "P4", "Converts culture from a feeling to something measurable. Boards increasingly expect engagement data alongside financial data. Establishes the baseline for improvement tracking.", "Q2"],
+  [19, "OKRs / consistent goal-setting methodology", "P5", "Aligns individual effort to business strategy — a fundamental Board expectation. Without shared goal-setting, the business cannot demonstrate its people are working toward the same outcomes.", "Q2"],
+  [22, "Leadership capability framework", "P6", "Boards care about leadership quality as a succession and continuity risk. A framework signals the business is deliberate about how it builds its leadership bench.", "Q2"],
+  [25, "Culture dashboard / people metrics report to leadership", "P6", "Gives the Board the people data they need alongside financial data. This is the reporting infrastructure that makes everything else in the strategy measurable and accountable.", "Q2"],
+  [31, "Structured performance and conduct management process", "P8", "Legal and compliance risk. Unfair dismissal exposure is material at Highview's scale. A Board will see the absence of documented performance processes as a liability.", "Q2"],
+  [11, "Leadership development program", "P3", "Succession planning is a Board priority in professional services. Building leaders from within reduces external hiring cost and protects the business against key person departure.", "Q3"],
+  [24, "Accountability framework for leaders", "P6", "Embeds people outcomes into how leadership performance is measured — the mechanism that turns strategy into sustained behaviour change. Boards want leaders accountable for culture, not just revenue.", "Q3"],
+  [23, "People-manager training program", "P6", "Manager quality is the single biggest driver of team performance and retention. The Board will see this as protecting their investment in the fee-earning workforce.", "Q3"],
+  [8, "Individual Development Plans (IDPs)", "P3", "Retention tool for fee-earners and emerging talent. IDPs signal investment in people and are increasingly expected by the workforce Highview needs to attract.", "Q3"],
+  [7, "Workforce planning and proactive sourcing strategy", "P1", "Moves Highview from reactive to strategic hiring — critical as the business scales across multiple locations. Boards in growth firms want resourcing planned, not scrambled.", "Q3"],
+  [29, "HR policy framework and compliance calendar", "P8", "Compliance risk management. Award obligations, WHS requirements and Fair Work Act compliance need systematic oversight — a Board expects this foundation to be in place.", "Q3"],
+  [12, "Mentoring and coaching program", "P3", "Deepens development beyond the line manager relationship — builds cross-functional connection and resilience. Board-level interest as part of the talent pipeline story.", "Q4"],
+  [20, "Continuous feedback culture (not just annual reviews)", "P5", "High strategic value but requires the goal-setting framework (Q2) and manager training (Q3) to be in place first. Cultural shift that takes time to embed.", "Q4"],
+  [13, "Structured learning program for graduates and key roles", "P3", "Talent pipeline for the next generation of Highview advisors. Board-relevant as a long-term growth investment — sequenced after foundational L&D infrastructure is in place.", "Q4"],
+];
+
+const OPS = [
+  [1, "Pre-boarding digital experience", "P2", "A templated email sequence and welcome pack. Valuable but operational — this is an HR process improvement, not a strategic initiative."],
+  [6, "Employee referral program", "P1", "A structured referral process is good practice but operational. It runs alongside hiring activity rather than requiring Board-level strategic oversight."],
+  [10, "Annual L&D budget per person", "P3", "A budget policy decision. Important, but it sits within the financial planning cycle rather than as a standalone strategic initiative."],
+  [17, "Recognition and reward program (non-monetary)", "P4", "A culture-building practice best owned operationally. The Board cares about engagement outcomes measured by eNPS — not the mechanism used to drive them."],
+  [18, "Employee voice channel", "P4", "An anonymous feedback form or standing agenda item. Valuable but operational — the Board cares about what the channel reveals, not its existence."],
+  [21, "Benefits review and competitive benchmarking", "P5", "Annual benchmarking exercise — important hygiene but operational. Findings feed into the remuneration strategy rather than standing alone."],
+  [26, "All hands / company-wide meetings", "P6", "A communication cadence. Valuable and visible, but it is a leadership practice rather than a strategic initiative. The Board expects this to simply happen."],
+  [28, "Voluntary turnover tracking and analysis", "P7", "Operational reporting that feeds into the culture dashboard. Once the dashboard exists, this is embedded within it rather than a separate initiative."],
+  [30, "Gender diversity reporting and analysis by role level", "P8", "Important data point but operational — Employment Hero already holds this data. It becomes a standing metric in the culture dashboard rather than a standalone initiative."],
+  [3, "Manager onboarding and training toolkit", "P2", "A document set that supports the manager training program. Once that program is built, the toolkit is a component of it rather than a separate strategic item."],
+];
+
+const phases = {};
+STRAT.forEach(([num,,,,ph]) => phases[num] = ph || '');
+
+let currentFilter = 'all';
+
+// ─── Sort panel ───────────────────────────────────────────────────────────────
+function renderSort() {
+  ['strat-grid','ops-grid'].forEach(id => document.getElementById(id).innerHTML = '');
+  const sg = document.getElementById('strat-grid');
+  const og = document.getElementById('ops-grid');
+
+  STRAT.forEach(([num, name, pillar, why]) => {
+    const d = document.createElement('div');
+    d.className = 'item-card strat';
+    d.innerHTML = `<div class="item-top">
+      <span class="item-num" style="background:${PC[pillar]}">${num}</span>
+      <span class="item-name">${name}</span>
+    </div>
+    <div><span class="item-pillar" style="background:${PC[pillar]}">${pillar}: ${PL[pillar]}</span></div>
+    <div class="item-why">${why}</div>`;
+    sg.appendChild(d);
+  });
+
+  OPS.forEach(([num, name, pillar, why]) => {
+    const d = document.createElement('div');
+    d.className = 'item-card ops';
+    d.innerHTML = `<div class="item-top">
+      <span class="item-num" style="background:${PC[pillar]}">${num}</span>
+      <span class="item-name">${name}</span>
+    </div>
+    <div><span class="item-pillar" style="background:${PC[pillar]}">${pillar}: ${PL[pillar]}</span></div>
+    <div class="item-why">${why}</div>`;
+    og.appendChild(d);
+  });
+}
+
+// ─── Roadmap panel ────────────────────────────────────────────────────────────
+function phaseChipHTML(p) {
+  if (!p) return '<span class="pi-chip" style="background:#f0f0f0;color:#888">Unassigned</span>';
+  const styles = {
+    Q1: 'background:#e0f5e9;color:#1a6e2e',
+    Q2: 'background:#dce6f0;color:#1B3A5C',
+    Q3: 'background:#f5efe0;color:#7F6000',
+    Q4: 'background:#ede5f4;color:#6B4C8A',
+  };
+  const labels = {
+    Q1: 'Q1 — Do Now (0–3 months)',
+    Q2: 'Q2 — Build & Embed (3–6 months)',
+    Q3: 'Q3 — Grow & Scale (6–9 months)',
+    Q4: 'Q4 — Sustain & Elevate (9–12 months)',
+  };
+  return `<span class="pi-chip" style="${styles[p]}">${labels[p]}</span>`;
+}
+
+function updateSummary() {
+  const c = {Q1:0,Q2:0,Q3:0,Q4:0,'':0};
+  Object.values(phases).forEach(p => c[p] = (c[p]||0)+1);
+  document.getElementById('s-q1').textContent = `${c.Q1} in Q1 — Do Now`;
+  document.getElementById('s-q2').textContent = `${c.Q2} in Q2 — Build`;
+  document.getElementById('s-q3').textContent = `${c.Q3} in Q3 — Grow`;
+  document.getElementById('s-q4').textContent = `${c.Q4} in Q4 — Sustain`;
+  document.getElementById('s-un').textContent  = `${c['']} unassigned`;
+}
+
+function renderRoadmap() {
+  const tbody = document.getElementById('rm-tbody');
+  tbody.innerHTML = '';
+  updateSummary();
+
+  STRAT.forEach(([num, name, pillar, why]) => {
+    const ph = phases[num] || '';
+    if (currentFilter !== 'all' && ph !== currentFilter) return;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="rm-num" style="color:${PC[pillar]}">${num}</td>
+      <td><div class="rm-name">${name}</div></td>
+      <td><span class="rm-pillar-tag" style="background:${PC[pillar]}">${pillar}</span><br><span style="font-size:10px;color:#888">${PL[pillar]}</span></td>
+      <td><div class="rm-why">${why}</div></td>
+      <td>
+        <select class="phase-sel" data-num="${num}" onchange="updatePhase(this)">
+          <option value="">— Unassigned —</option>
+          <option value="Q1" ${ph==='Q1'?'selected':''}>Q1 — Do Now (0–3 months)</option>
+          <option value="Q2" ${ph==='Q2'?'selected':''}>Q2 — Build &amp; Embed (3–6 months)</option>
+          <option value="Q3" ${ph==='Q3'?'selected':''}>Q3 — Grow &amp; Scale (6–9 months)</option>
+          <option value="Q4" ${ph==='Q4'?'selected':''}>Q4 — Sustain &amp; Elevate (9–12 months)</option>
+        </select>
+        <div class="phase-indicator">${phaseChipHTML(ph)}</div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function updatePhase(sel) {
+  phases[parseInt(sel.dataset.num)] = sel.value;
+  const indicator = sel.parentElement.querySelector('.phase-indicator');
+  indicator.innerHTML = phaseChipHTML(sel.value);
+  updateSummary();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.rf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoadmap();
+}
+
+// ─── Export / Print ───────────────────────────────────────────────────────────
+function copyPlan() {
+  const lines = ['Highview P&C Strategy — Phased Delivery Plan\n'];
+  lines.push(`Generated: ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}\n`);
+  ['Q1','Q2','Q3','Q4',''].forEach(q => {
+    const labels = {Q1:'Q1 — Do Now (0–3 months)',Q2:'Q2 — Build & Embed (3–6 months)',Q3:'Q3 — Grow & Scale (6–9 months)',Q4:'Q4 — Sustain & Elevate (9–12 months)','':'Unassigned'};
+    const items = STRAT.filter(([n]) => (phases[n]||'') === q);
+    if (!items.length) return;
+    lines.push(`\n${labels[q]}`);
+    lines.push('─'.repeat(40));
+    items.forEach(([n,name,pillar]) => lines.push(`  ${n}. ${name}  [${pillar}: ${PL[pillar]}]`));
+  });
+  lines.push('\n\nOperational Items (Annual HR Work Plan)');
+  lines.push('─'.repeat(40));
+  OPS.forEach(([n,name,pillar]) => lines.push(`  ${n}. ${name}  [${pillar}: ${PL[pillar]}]`));
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.querySelector('.export-btn.primary');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied to clipboard ✓';
+    setTimeout(() => btn.textContent = orig, 2500);
+  });
+}
+
+function printPlan() {
+  window.print();
+}
+
+// ─── Tab switching ─────────────────────────────────────────────────────────────
+function showTab(t) {
+  ['sort','rm'].forEach(id => {
+    document.getElementById('panel-'+id).classList.toggle('active', id===t);
+    document.getElementById('tab-'+id).classList.toggle('active', id===t);
+  });
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+renderSort();
+renderRoadmap();
+</script>
+</body>
+</html>
